@@ -13,3 +13,7 @@ Route::get('/registration', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+Route::get('/apartaments', function () {
+    return view('apartaments');
+});
