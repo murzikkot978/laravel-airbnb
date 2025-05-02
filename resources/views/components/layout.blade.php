@@ -16,6 +16,7 @@
         <a href="http://localhost/apartaments">Apartaments</a>
 
         <div class="flex gap-5">
+            <a href="http://localhost/newproposition">New apartament</a>
             <a href="http://localhost/login">Login</a>
             <a href="http://localhost/registration">Register</a>
         </div>

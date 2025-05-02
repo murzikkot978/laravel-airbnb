@@ -17,3 +17,7 @@ Route::get('/login', function () {
 Route::get('/apartaments', function () {
     return view('apartaments');
 });
+
+Route::get('/newproposition', function () {
+    return view('newproposition');
+});
