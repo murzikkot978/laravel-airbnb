@@ -2,7 +2,7 @@
     <div class="m-auto">
         <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-gray-300 p-8 rounded-lg shadow-lg w-full">
-                <h1 class="text-2xl font-bold mb-6 text-center">Information</h1>
+                <h1 class="text-2xl font-bold mb-6 text-center">Edit information</h1>
 
                 <div class="flex flex-col gap-4">
                     <input type="text" name="title" id="title" placeholder="Name apartment" class="border-2 rounded p-3"
@@ -20,7 +20,7 @@
             </div>
 
             <div class="bg-gray-300 p-8 rounded-lg shadow-lg w-full">
-                <h1 class="text-2xl font-bold mb-6 text-center">Location</h1>
+                <h1 class="text-2xl font-bold mb-6 text-center">Edit location</h1>
 
                 <div class="flex flex-col gap-4">
                     <input type="text" name="country" id="country" placeholder="Country" class="border-2 rounded p-3"
@@ -35,7 +35,7 @@
             <div class="md:col-span-2">
                 <button type="submit"
                         class="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition">
-                    Confirmation
+                    Save changes
                 </button>
             </div>
         </form>

@@ -14,10 +14,14 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::get('/apartaments', function () {
-    return view('apartaments');
+Route::get('/apartments', function () {
+    return view('apartments');
 });
 
 Route::get('/newproposition', function () {
     return view('newproposition');
+});
+
+Route::get('/editapartment', function () {
+    return view('editapartment');
 });

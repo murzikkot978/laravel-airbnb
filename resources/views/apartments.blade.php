@@ -30,7 +30,7 @@
     </div>
 
 
-    <div class=" grid grid-cols-5 mt-8 gap-6 px-10 py-10">
+    <div class=" grid md:grid-cols-5 mt-8 gap-6 px-10 py-10">
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
             <img src="/storage/uploads/apartament-1.jpg"
                  class="w-full h-48 object-cover" alt="Post image">
