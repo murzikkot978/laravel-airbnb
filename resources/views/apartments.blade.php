@@ -8,12 +8,12 @@
             </div>
             <div class="flex flex-col items-start">
                 <label for="where" class="mb-1 font-semibold">Min Price</label>
-                <input type="text" id="where" name="where" placeholder="0"
+                <input type="number" id="where" name="where" placeholder="0"
                        class="border border-gray-300 rounded-md px-2 py-1 w-40"/>
             </div>
             <div class="flex flex-col items-start">
                 <label for="where" class="mb-1 font-semibold">Max Price</label>
-                <input type="text" id="where" name="where" placeholder="0"
+                <input type="number" id="where" name="where" placeholder="0"
                        class="border border-gray-300 rounded-md px-2 py-1 w-40"/>
             </div>
             <div class="flex flex-col items-start">

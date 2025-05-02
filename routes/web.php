@@ -25,3 +25,7 @@ Route::get('/newproposition', function () {
 Route::get('/editapartment', function () {
     return view('editapartment');
 });
+
+Route::get('/detailsapartments', function () {
+    return view('detailsapartments');
+});

@@ -28,7 +28,10 @@
                     <input type="text" name="city" id="city" placeholder="City" class="border-2 rounded p-3" required>
                     <input type="text" name="adress" id="adress" placeholder="Address" class="border-2 rounded p-3"
                            required>
-                    <img src="/storage/uploads/Google-Maps-lausanne.jpg">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d21959.20473994736!2d6.631473949999999!3d46.5298689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sch!4v1746184837321!5m2!1sfr!2sch"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
 
