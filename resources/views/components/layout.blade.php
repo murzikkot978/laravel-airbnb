@@ -17,6 +17,7 @@
 
 
         <div class="flex gap-5">
+            <a href="http://localhost/">HOME</a>
             <a href="http://localhost/apartments">Apartments</a>
             <a href="http://localhost/detailsapartments">Details apartment</a>
 
