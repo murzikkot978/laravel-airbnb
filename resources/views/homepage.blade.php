@@ -3,7 +3,7 @@
     <div class="mt-16">
         <p class="w-full text-center font-bold text-3xl mb-5">3 most popular place</p>
 
-        <p class="w-full text-center font-bold text-2xl">Lausenne</p>
+        <p class="w-full text-center font-bold text-2xl">Lausanne</p>
         <div class="grid md:grid-cols-3 gap-6 mb-5">
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
                 <img src="/storage/uploads/apartament-1.jpg"
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <p class="w-full text-center font-bold text-2xl">Genev</p>
+        <p class="w-full text-center font-bold text-2xl">Geneve</p>
         <div class="grid md:grid-cols-3 gap-6 mb-5">
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
                 <img src="/storage/uploads/apartament-4.jpg"
