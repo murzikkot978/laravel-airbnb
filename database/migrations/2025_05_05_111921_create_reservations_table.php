@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('appartment_id')->constrained('apartments');
+            $table->foreignId('apartment_id')->constrained('apartments');
             $table->date('start_date');
             $table->date('end_date');
+            $table->timestamps();
         });
     }
 
