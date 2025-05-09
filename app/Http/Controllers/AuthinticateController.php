@@ -29,15 +29,9 @@ class AuthinticateController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        User::create($request->all());
 
-        Auth::login($user);
-
-        return redirect('/')->with('success', 'Registration Successful!');
+        return redirect('login')->with('success', 'Registration Successful!');
     }
 
     public function login(Request $request)
