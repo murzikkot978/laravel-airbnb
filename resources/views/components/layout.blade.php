@@ -24,10 +24,19 @@
         </div>
 
         <div class="flex gap-5">
-            <a href="http://localhost/editapartment">Edit apartment</a>
-            <a href="http://localhost/newproposition">New apartment</a>
-            <a href="http://localhost/login">Login</a>
-            <a href="http://localhost/registration">Register</a>
+            @auth
+                <a href="http://localhost/editapartment">Edit apartment</a>
+                <a href="http://localhost/newproposition">New apartment</a>
+
+                <form id="logout" action="{{ url('logout') }}" method="get">
+                    @csrf
+                    <button type="submit">Log out</button>
+                </form>
+
+            @endauth
+            @guest()
+                <a href="http://localhost/login">Login</a>
+            @endguest
         </div>
 
     </nav>
