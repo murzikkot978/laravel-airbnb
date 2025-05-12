@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('rooms');
             $table->integer('peoples');
             $table->integer('price');
-            $table->string('photo');
             $table->string('country');
             $table->string('city');
             $table->string('street');

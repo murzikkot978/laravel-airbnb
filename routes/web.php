@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthinticateController;
+use App\Http\Controllers\ApartmentControlles;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,16 +16,15 @@ Route::post('/login', [AuthinticateController::class, 'login']);
 
 Route::get('/logout', [AuthinticateController::class, 'logout'])->name('logout');
 
+Route::get('/newproposition', [ApartmentControlles::class, 'showNewProposition'])->name('newproposition');
+Route::post('/newproposition', [ApartmentControlles::class, 'newProposition']);
+
 Route::get('/apartments', function () {
     return view('apartments');
 });
 
 Route::get('/detailsapartments', function () {
     return view('detailsapartments');
-});
-
-Route::get('/newproposition', function () {
-    return view('newproposition');
 });
 
 Route::get('/editapartment', function () {

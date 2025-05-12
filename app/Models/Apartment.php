@@ -30,10 +30,14 @@ class Apartment extends Model
         return $this->belongsTo(User::class);
     }
 
-
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Photo::class);
     }
 
 }
