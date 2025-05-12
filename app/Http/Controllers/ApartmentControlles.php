@@ -90,11 +90,62 @@ class ApartmentControlles extends Controller
         return view('/apartments', ['apartments' => $apartments]);
     }
 
-    public function showDetailsApartments(Request $request, int $id)
+    public function showDetailsApartments(int $id)
     {
         $apartment = Apartment::with(['photos', 'user'])
             ->findOrFail($id);
 
         return view('detailsapartments', ['apartment' => $apartment]);
+    }
+
+    public function showEditApartment(int $id)
+    {
+        $apartment = Apartment::findOrFail($id);
+        return view('editapartment', ['apartment' => $apartment]);
+    }
+
+    public function editApartment(Request $request, int $id)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'rooms' => 'required|integer',
+            'peoples' => 'required|integer',
+            'price' => 'required|integer',
+            'country' => 'required',
+            'city' => 'required',
+            'street' => 'required',
+            'photos' => 'array',
+            'photos.*' => 'file|mimes:jpg,png,jpeg|max:2048',
+        ]);
+
+        $apartment = Apartment::with('photos')->findOrFail($id);
+
+        $apartment->update([
+            'title' => $request->title,
+            'content' => $request->description,
+            'rooms' => $request->rooms,
+            'peoples' => $request->peoples,
+            'price' => $request->price,
+            'country' => $request->country,
+            'city' => $request->city,
+            'street' => $request->street,
+        ]);
+
+        if ($request->hasFile('photos')) {
+            foreach ($apartment->photos as $photo) {
+                Storage::disk('public')->delete('uploads/' . $photo->photo);
+            }
+            Photo::where('apartment_id', $id)->delete();
+            foreach ($request->file('photos') as $photo) {
+                $photoNameToStore = time() . '_' . $photo->getClientOriginalName();
+                $photo->storeAs('uploads', $photoNameToStore, 'public');
+                Photo::factory([
+                    'photo' => $photoNameToStore,
+                    'apartment_id' => $apartment->id,
+                ])->create();
+            }
+        }
+        return redirect('detailsapartments/' . $id);
     }
 }

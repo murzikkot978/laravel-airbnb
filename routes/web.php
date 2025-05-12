@@ -24,7 +24,5 @@ Route::post('/apartments', [ApartmentControlles::class, 'sortApartments']);
 
 Route::get('/detailsapartments/{id}', [ApartmentControlles::class, 'showDetailsApartments'])->name('detailsapartments');
 
-Route::get('/editapartment', function () {
-    return view('editapartment');
-});
-
+Route::get('/editapartments/{id}', [ApartmentControlles::class, 'showEditApartment'])->name('editapartments');
+Route::post('/editapartments/{id}', [ApartmentControlles::class, 'editApartment'])->name('updateapartment');
