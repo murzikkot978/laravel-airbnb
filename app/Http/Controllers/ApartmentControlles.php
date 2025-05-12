@@ -148,4 +148,17 @@ class ApartmentControlles extends Controller
         }
         return redirect('detailsapartments/' . $id);
     }
+
+    public function deleteApartment(int $id)
+    {
+        $apartment = Apartment::with('photos')->findOrFail($id);
+
+        foreach ($apartment->photos as $photo) {
+            Storage::disk('public')->delete('uploads/' . $photo->photo);
+        }
+        Photo::where('apartment_id', $id)->delete();
+        Apartment::where('id', $id)->delete();
+
+        return redirect('apartments');
+    }
 }
