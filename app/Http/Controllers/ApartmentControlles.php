@@ -53,6 +53,35 @@ class ApartmentControlles extends Controller
                 'apartment_id' => $apartment->id,
             ])->create();
         }
-        return redirect('/');
+        return redirect('/apartments');
+    }
+
+    public function showApartments()
+    {
+
+        $apartments = Apartment::with('photos')->get();
+
+        return view('/apartments', ['apartments' => $apartments]);
+    }
+
+    public function sortApartments(Request $request)
+    {
+        $request->validate([
+            'where' => 'required|string',
+            'min' => 'required|numeric|min:0',
+            'max' => 'required|numeric|min:0|gte:min',
+            'rooms' => 'required|integer|min:1',
+            'persons' => 'required|integer|min:1'
+        ]);
+
+        $apartments = Apartment::with('photos')->
+            when($request, function ($query) use ($request) {
+                $query->where('city', $request->where);
+            $query->where('price', '>=', $request->min);
+            $query->where('price', '<=', $request->max);
+            $query->where('rooms', $request->rooms);
+            $query->where('peoples', $request->persons);
+            })->get();
+        return view('/apartments', ['apartments' => $apartments]);
     }
 }
