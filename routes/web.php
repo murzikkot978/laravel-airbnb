@@ -22,9 +22,7 @@ Route::post('/newproposition', [ApartmentControlles::class, 'newProposition']);
 Route::get('/apartments', [ApartmentControlles::class, 'showApartments'])->name('apartments');
 Route::post('/apartments', [ApartmentControlles::class, 'sortApartments']);
 
-Route::get('/detailsapartments', function () {
-    return view('detailsapartments');
-});
+Route::get('/detailsapartments/{id}', [ApartmentControlles::class, 'showDetailsApartments'])->name('detailsapartments');
 
 Route::get('/editapartment', function () {
     return view('editapartment');

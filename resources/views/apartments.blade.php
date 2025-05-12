@@ -38,7 +38,9 @@
     <div class=" grid md:grid-cols-5 mt-8 gap-6 px-10 py-10">
 
         @foreach($apartments as $apartment)
+            <a href="{{ route('detailsapartments', ['id' => $apartment->id]) }}">
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
+                @csrf
                 <img src="/storage/uploads/{{ $apartment->photos[0]->photo }}"
                      class="w-full h-48 object-cover" alt="Post image">
                 <div class="p-4">
@@ -46,6 +48,7 @@
                     <p class="text-blue-600 font-bold">{{ $apartment->price }}</p>
                 </div>
             </div>
+            </a>
         @endforeach
     </div>
 

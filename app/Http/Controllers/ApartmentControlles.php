@@ -74,14 +74,27 @@ class ApartmentControlles extends Controller
             'persons' => 'required|integer|min:1'
         ]);
 
-        $apartments = Apartment::with('photos')->
-            when($request, function ($query) use ($request) {
-                $query->where('city', $request->where);
-            $query->where('price', '>=', $request->min);
-            $query->where('price', '<=', $request->max);
-            $query->where('rooms', $request->rooms);
-            $query->where('peoples', $request->persons);
-            })->get();
+        if (empty($request->all())) {
+            $apartments = Apartment::with('photos')->get();
+
+        } else {
+            $apartments = Apartment::with('photos')
+                ->where('city', $request->where)
+                ->where('price', '>=', $request->min)
+                ->where('price', '<=', $request->max)
+                ->where('rooms', $request->rooms)
+                ->where('peoples', $request->persons)
+                ->get();
+        }
+
         return view('/apartments', ['apartments' => $apartments]);
+    }
+
+    public function showDetailsApartments(Request $request, int $id)
+    {
+        $apartment = Apartment::with(['photos', 'user'])
+            ->findOrFail($id);
+
+        return view('detailsapartments', ['apartment' => $apartment]);
     }
 }
