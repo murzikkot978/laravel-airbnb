@@ -17,10 +17,9 @@ Route::post('/login', [AuthinticateController::class, 'login']);
 Route::get('/logout', [AuthinticateController::class, 'logout'])->name('logout');
 
 Route::get('/newproposition', [ApartmentControlles::class, 'showNewProposition'])->name('newproposition');
-Route::post('/newproposition', [ApartmentControlles::class, 'newProposition']);
+Route::post('/newproposition', [ApartmentControlles::class, 'newProposition'])->name('newproposition');
 
 Route::get('/apartments', [ApartmentControlles::class, 'showApartments'])->name('apartments');
-Route::post('/apartments', [ApartmentControlles::class, 'sortApartments']);
 
 Route::get('/detailsapartments/{id}', [ApartmentControlles::class, 'showDetailsApartments'])->name('detailsapartments');
 

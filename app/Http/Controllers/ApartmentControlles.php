@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreApartmentRequest;
+use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Apartment;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use PhpParser\Builder;
 
 class ApartmentControlles extends Controller
 {
@@ -15,38 +19,15 @@ class ApartmentControlles extends Controller
         return view('newproposition');
     }
 
-    public function newProposition(Request $request)
+    public function newProposition(StoreApartmentRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'rooms' => 'required|integer',
-            'peoples' => 'required|integer',
-            'price' => 'required|integer',
-            'country' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'photos' => 'required|array',
-            'photos.*' => 'file|mimes:jpg,png,jpeg|max:2048',
-        ]);
-
-
-        $apartment = new Apartment([
-            'title' => $request->title,
-            'content' => $request->description,
-            'rooms' => $request->rooms,
-            'peoples' => $request->peoples,
-            'price' => $request->price,
-            'country' => $request->country,
-            'city' => $request->city,
-            'street' => $request->street,
-        ]);
+        $apartment = new Apartment($request->validated());
 
         $apartment->user()->associate(Auth::user());
         $apartment->save();
 
         foreach ($request->file('photos') as $photo) {
-            $photoNameToStore = time() . '_' . $photo->getClientOriginalName();
+            $photoNameToStore = Str::uuid() . '_' . $photo->getClientOriginalName();
             $photo->storeAs('uploads', $photoNameToStore, 'public');
             Photo::factory([
                 'photo' => $photoNameToStore,
@@ -56,38 +37,29 @@ class ApartmentControlles extends Controller
         return redirect('/apartments');
     }
 
-    public function showApartments()
-    {
-
-        $apartments = Apartment::with('photos')->get();
-
-        return view('/apartments', ['apartments' => $apartments]);
-    }
-
-    public function sortApartments(Request $request)
+    public function showApartments(Request $request)
     {
         $request->validate([
-            'where' => 'required|string',
-            'min' => 'required|numeric|min:0',
-            'max' => 'required|numeric|min:0|gte:min',
-            'rooms' => 'required|integer|min:1',
-            'persons' => 'required|integer|min:1'
+            'where' => 'nullable|string',
+            'min' => 'nullable|numeric|min:0',
+            'max' => 'nullable|numeric|min:0',
+            'rooms' => 'nullable|integer|min:1',
+            'persons' => 'nullable|integer|min:1'
         ]);
 
-        if (empty($request->all())) {
-            $apartments = Apartment::with('photos')->get();
 
-        } else {
-            $apartments = Apartment::with('photos')
-                ->where('city', $request->where)
-                ->where('price', '>=', $request->min)
-                ->where('price', '<=', $request->max)
-                ->where('rooms', $request->rooms)
-                ->where('peoples', $request->persons)
-                ->get();
-        }
+        $filterApartment = Apartment::with('photos') // Подгружаем связанные фото
+        ->when($request->where, fn($query) => $query->where('city', $request->where))
+            ->when($request->min, fn($query) => $query->where('price', '>=', $request->min))
+            ->when($request->max, fn($query) => $query->where('price', '<=', $request->max))
+            ->when($request->rooms, fn($query) => $query->where('rooms', $request->rooms))
+            ->when($request->persons, fn($query) => $query->where('peoples', $request->persons));
+
+        $apartments = $filterApartment->get();
+
 
         return view('/apartments', ['apartments' => $apartments]);
+
     }
 
     public function showDetailsApartments(int $id)
@@ -104,33 +76,11 @@ class ApartmentControlles extends Controller
         return view('editapartment', ['apartment' => $apartment]);
     }
 
-    public function editApartment(Request $request, int $id)
+    public function editApartment(UpdateApartmentRequest $request, int $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'rooms' => 'required|integer',
-            'peoples' => 'required|integer',
-            'price' => 'required|integer',
-            'country' => 'required',
-            'city' => 'required',
-            'street' => 'required',
-            'photos' => 'array',
-            'photos.*' => 'file|mimes:jpg,png,jpeg|max:2048',
-        ]);
-
         $apartment = Apartment::with('photos')->findOrFail($id);
 
-        $apartment->update([
-            'title' => $request->title,
-            'content' => $request->description,
-            'rooms' => $request->rooms,
-            'peoples' => $request->peoples,
-            'price' => $request->price,
-            'country' => $request->country,
-            'city' => $request->city,
-            'street' => $request->street,
-        ]);
+        $apartment->update($request->validated());
 
         if ($request->hasFile('photos')) {
             foreach ($apartment->photos as $photo) {
@@ -138,7 +88,7 @@ class ApartmentControlles extends Controller
             }
             Photo::where('apartment_id', $id)->delete();
             foreach ($request->file('photos') as $photo) {
-                $photoNameToStore = time() . '_' . $photo->getClientOriginalName();
+                $photoNameToStore = Str::uuid()->toString() . '_' . $photo->getClientOriginalName();
                 $photo->storeAs('uploads', $photoNameToStore, 'public');
                 Photo::factory([
                     'photo' => $photoNameToStore,

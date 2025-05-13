@@ -1,7 +1,7 @@
 <x-layout>
 
-    <form method="post" action="apartments" class="w-screen bg-blue-500 mt-14 py-4 text-white flex justify-center">
-        @csrf
+    <form method="get" action="{{ route('apartments') }}"
+          class="w-screen bg-blue-500 mt-14 py-4 text-white flex justify-center">
         <div class="flex gap-6 border-2 border-white rounded-2xl px-6 py-4 bg-white text-black shadow-md">
             <div class="flex flex-col items-start">
                 <label for="where" class="mb-1 font-semibold">City</label>
@@ -34,20 +34,19 @@
         </div>
     </form>
 
-
     <div class=" grid md:grid-cols-5 mt-8 gap-6 px-10 py-10">
 
         @foreach($apartments as $apartment)
             <a href="{{ route('detailsapartments', ['id' => $apartment->id]) }}">
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
-                @csrf
-                <img src="/storage/uploads/{{ $apartment->photos[0]->photo }}"
-                     class="w-full h-48 object-cover" alt="Post image">
-                <div class="p-4">
-                    <h2 class="text-lg font-semibold">{{ $apartment->city }}</h2>
-                    <p class="text-blue-600 font-bold">{{ $apartment->price }}</p>
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
+                    @csrf
+                    <img src="/storage/uploads/{{ $apartment->photos[0]->photo }}"
+                         class="w-full h-48 object-cover" alt="Post image">
+                    <div class="p-4">
+                        <h2 class="text-lg font-semibold">{{ $apartment->city }}</h2>
+                        <p class="text-blue-600 font-bold">{{ $apartment->price }}</p>
+                    </div>
                 </div>
-            </div>
             </a>
         @endforeach
     </div>

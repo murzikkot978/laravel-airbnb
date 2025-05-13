@@ -10,7 +10,7 @@
                     <input type="text" name="title" id="title" value="{{ $apartment->title }}"
                            placeholder="Name apartment" class="border-2 rounded p-3"
                            required>
-                    <textarea name="description" placeholder="Description" class="border-2 rounded p-3 resize-none"
+                    <textarea name="content" placeholder="Description" class="border-2 rounded p-3 resize-none"
                               rows="4">{{ $apartment->content }}</textarea>
                     <input type="number" name="rooms" id="rooms" value="{{ $apartment->rooms }}" min="1"
                            placeholder="Rooms"

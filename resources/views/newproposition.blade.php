@@ -1,6 +1,6 @@
 <x-layout>
     <div class="m-auto">
-        <form method="post" action="/newproposition" enctype="multipart/form-data"
+        <form method="post" action="{{ route('newproposition') }}" enctype="multipart/form-data"
               class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @csrf
             <div class="bg-gray-300 p-8 rounded-lg shadow-lg w-full">
@@ -9,7 +9,7 @@
                 <div class="flex flex-col gap-4">
                     <input type="text" name="title" id="title" placeholder="Name apartment" class="border-2 rounded p-3"
                            required>
-                    <textarea name="description" id="description" placeholder="Content"
+                    <textarea name="content" id="content" placeholder="Content"
                               class="border-2 rounded p-3 resize-none"
                               rows="4"></textarea>
                     <input type="number" name="rooms" id="rooms" min="1" placeholder="Rooms"
