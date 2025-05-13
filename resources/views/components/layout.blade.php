@@ -19,13 +19,11 @@
         <div class="flex gap-5">
             <a href="http://localhost/">HOME</a>
             <a href="http://localhost/apartments">Apartments</a>
-            <a href="http://localhost/detailsapartments">Details apartment</a>
 
         </div>
 
         <div class="flex gap-5">
             @auth
-                <a href="http://localhost/editapartment">Edit apartment</a>
                 <a href="http://localhost/newproposition">New apartment</a>
 
                 <form id="logout" action="{{ url('logout') }}" method="get">
@@ -41,6 +39,16 @@
 
     </nav>
 </header>
+
+@if ($errors->any())
+    <div class="bg-red-700 mt-14 text-white p-6 rounded-3xl shadow-lg w-full">
+        <ul class="w-full">
+            @foreach ($errors->all() as $error)
+                <li class="w-full text-center text-xl">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 {{ $slot }}
 

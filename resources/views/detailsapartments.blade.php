@@ -1,17 +1,10 @@
 <x-layout>
-
     <div class="glider-contain px-80 pt-20 pb-10">
         <button class="glider-prev ml-72 mt-32">«</button>
         <div class="glider">
-            <img src="/storage/uploads/apartament-1.jpg"/>
-            <img src="/storage/uploads/apartament-2.jpg"/>
-            <img src="/storage/uploads/apartament-3.jpg"/>
-            <img src="/storage/uploads/apartament-4.jpg"/>
-            <img src="/storage/uploads/apartament-5.jpg"/>
-            <img src="/storage/uploads/apartament-6.jpg"/>
-            <img src="/storage/uploads/apartament-7.jpg"/>
-            <img src="/storage/uploads/apartament-8.jpg"/>
-            <img src="/storage/uploads/apartament-9.jpg"/>
+            @foreach($apartment->photos as $photo)
+                <img src="/storage/uploads/{{ $photo->photo }}" alt="Photo apartment">
+            @endforeach
         </div>
         <button class="glider-next mr-72 mt-32">»</button>
     </div>
@@ -28,32 +21,39 @@
             });
         })
     </script>
+    <div class="flex lg:flex-row justify-between w-full px-4 lg:px-80 gap-6">
+        <a href="{{ route('editapartments', ['id' => $apartment->id]) }}"
+           class="bg-red-500 p-4 hover:bg-red-700 rounded-xl w-full max-w-md mx-auto text-center">Edit apartment</a>
+        <a href="{{ route('deleteapartment', ['id' => $apartment->id]) }}"
+           class="bg-red-500 p-4 hover:bg-red-700 rounded-xl w-full max-w-md mx-auto text-center">Delete</a>
+    </div>
     <div class="flex flex-col lg:flex-row justify-between w-full px-4 lg:px-80 gap-6">
 
         <div class="flex flex-col w-full max-w-md mx-auto  p-6 rounded-lg space-y-3 text-center">
-            <p class="text-xl font-semibold text-gray-800">Apartment Title</p>
+            <p class="text-xl font-semibold text-gray-800">{{ $apartment->title }}</p>
 
-            <p class="text-gray-700">Rooms: 2 &nbsp; | &nbsp; Guests: 3</p>
+            <p class="text-gray-700">Rooms: {{ $apartment->rooms }} &nbsp; | &nbsp;
+                Guests: {{ $apartment->peoples }}</p>
 
             <p class="text-sm text-gray-600">
-                Content for this apartment, like a short description that explains what the place offers.
+                {{ $apartment->content }}
             </p>
 
             <hr class="my-2 border-gray-300"/>
 
-            <p class="text-gray-700"><span class="font-medium">Owner:</span> John Doe</p>
-            <p class="text-gray-700"><span class="font-medium">Email:</span> john@example.com</p>
+            <p class="text-gray-700"><span class="font-medium">Owner:</span> {{ $apartment->user->name }}</p>
+            <p class="text-gray-700"><span class="font-medium">Email:</span> {{ $apartment->user->email }}</p>
 
             <hr class="my-2 border-gray-300"/>
 
-            <p class="text-gray-700"><span class="font-medium">Country:</span> France</p>
-            <p class="text-gray-700"><span class="font-medium">City:</span> Paris</p>
-            <p class="text-gray-700"><span class="font-medium">Address:</span> 123 Rue Lafayette</p>
+            <p class="text-gray-700"><span class="font-medium">Country:</span> {{ $apartment->country }}</p>
+            <p class="text-gray-700"><span class="font-medium">City:</span> {{ $apartment->city }}</p>
+            <p class="text-gray-700"><span class="font-medium">Address:</span> {{ $apartment->street }}</p>
         </div>
 
         <div class="flex flex-col bg-gray-300 p-6 rounded-lg shadow-md w-full max-w-md mx-auto space-y-4">
 
-            <p class="text-lg font-semibold text-gray-700">Price per night</p>
+            <p class="text-lg font-semibold text-gray-700">Price per night: {{ $apartment->price }}</p>
 
             <div class="flex gap-4">
                 <div class="flex flex-col flex-1">
