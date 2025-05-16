@@ -22,7 +22,7 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => 'required|date',
+            'start_date' => 'required|date|after:yesterday',
             'end_date' => 'required|date|after:start_date',
         ];
     }
