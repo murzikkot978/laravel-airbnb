@@ -51,37 +51,78 @@
             <p class="text-gray-700"><span class="font-medium">Address:</span> {{ $apartment->street }}</p>
         </div>
 
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                let checkinInput = document.querySelector('#checkin');
+                let checkoutInput = document.querySelector('#checkout');
+                let priceNights = document.querySelector('.price-nights');
+                let totalPrice = document.querySelector('.total-price');
+
+                function updatePrice() {
+                    console.log('update');
+                    let checkinDate = new Date(checkinInput.value);
+                    let checkoutDate = new Date(checkoutInput.value);
+                    let differentsTime = checkoutDate - checkinDate;
+                    let nights = differentsTime / (1000 * 60 * 60 * 24);
+                    let price = {{ $apartment->price }};
+                    if (nights > 0) {
+                        priceNights.textContent = nights * price + '$';
+                        totalPrice.textContent = nights * price + 90 + '$';
+                    } else {
+                        priceNights.textContent = '0$';
+                        totalPrice.textContent = '0$';
+                    }
+                }
+
+                checkinInput.addEventListener('change', updatePrice);
+                checkoutInput.addEventListener('change', updatePrice);
+            })
+        </script>
+
         <div class="flex flex-col bg-gray-300 p-6 rounded-lg shadow-md w-full max-w-md mx-auto space-y-4">
 
-            <p class="text-lg font-semibold text-gray-700">Price per night: {{ $apartment->price }}</p>
+            <div class="flex justify-between">
+                <p class="text-lg font-semibold text-gray-700">Price per night: </p>
+                <div class="flex">
+                    <p class="pricePerNight text-lg font-semibold text-gray-700">{{ $apartment->price }}</p>
+                    <p class="text-lg font-semibold text-gray-700">$</p>
+                </div>
 
-            <div class="flex gap-4">
-                <div class="flex flex-col flex-1">
-                    <label for="checkin" class="text-sm text-gray-600">Check-in</label>
-                    <input type="date" id="checkin" name="checkin" class="border rounded p-2"/>
-                </div>
-                <div class="flex flex-col flex-1">
-                    <label for="checkout" class="text-sm text-gray-600">Checkout</label>
-                    <input type="date" id="checkout" name="checkout" class="border rounded p-2"/>
-                </div>
             </div>
 
-            <button class="w-full bg-red-600 text-white rounded p-2 hover:bg-red-700 transition">
-                Reserve
-            </button>
+            <form method="post" action="{{route('newReservation', ['id' => $apartment->id])}}">
+                @csrf
+                <div class="flex gap-4">
+                    <div class="flex flex-col flex-1">
+                        <label for="checkin" class="text-sm text-gray-600">Check-in</label>
+                        <input type="date" min="{{ $today }}" id="checkin" name="start_date" class="border rounded p-2"
+                               required/>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <label for="checkout" class="text-sm text-gray-600">Checkout</label>
+                        <input type="date" min="{{ $today }}" id="checkout" name="end_date" class="border rounded p-2"
+                               required/>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-red-600 text-white rounded p-2 hover:bg-red-700 transition">
+                    Reserve
+                </button>
+            </form>
+
 
             <div class="border-t pt-2 space-y-2 text-sm text-gray-700">
                 <div class="flex justify-between">
                     <p>Price × nights</p>
-                    <p>$450</p>
+                    <p class="price-nights">0$</p>
                 </div>
                 <div class="flex justify-between">
                     <p>Cleaning fee</p>
-                    <p>$90</p>
+                    <p>90$</p>
                 </div>
                 <div class="flex justify-between font-semibold text-black border-t pt-2">
                     <p>Total</p>
-                    <p>$540</p>
+                    <p class="total-price">0$</p>
                 </div>
             </div>
         </div>

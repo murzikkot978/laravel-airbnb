@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApartmentRequest;
+use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use App\Models\Apartment;
 use App\Models\Photo;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -64,10 +66,12 @@ class ApartmentControlles extends Controller
 
     public function showDetailsApartments(int $id)
     {
+        $today = date('Y-m-d');
+
         $apartment = Apartment::with(['photos', 'user'])
             ->findOrFail($id);
 
-        return view('detailsapartments', ['apartment' => $apartment]);
+        return view('detailsapartments', ['apartment' => $apartment], ['today' => $today]);
     }
 
     public function showEditApartment(int $id)
@@ -110,5 +114,22 @@ class ApartmentControlles extends Controller
         Apartment::where('id', $id)->delete();
 
         return redirect('apartments');
+    }
+
+    public function reservation(StoreReservationRequest $request, int $id)
+    {
+
+
+        $reservation = new Reservation($request->validated());
+
+        $reservation->user()->associate(Auth::user());
+        $reservation->apartment()->associate($id);
+        $reservation->save();
+
+        $apartment = Apartment::where('id', $id)->first();
+        $apartment->reserved++;
+        $apartment->save();
+
+        return redirect('/apartments');
     }
 }
