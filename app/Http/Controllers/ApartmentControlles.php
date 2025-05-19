@@ -16,6 +16,19 @@ use PhpParser\Builder;
 
 class ApartmentControlles extends Controller
 {
+    public function showHomePage()
+    {
+        $cities = Apartment::distinct()->pluck('city');
+        $allApartments = [];
+        foreach ($cities as $city) {
+            $apartments = Apartment::with('photos')->withCount('reservations')->where('city', $city)->limit(3)->get();
+
+            $allApartments[$city] = $apartments;
+        }
+
+        return view('homepage', ['allApartments' => $allApartments]);
+    }
+
     public function showNewProposition()
     {
         return view('newproposition');
@@ -125,10 +138,6 @@ class ApartmentControlles extends Controller
         $reservation->user()->associate(Auth::user());
         $reservation->apartment()->associate($id);
         $reservation->save();
-
-        $apartment = Apartment::where('id', $id)->first();
-        $apartment->reserved++;
-        $apartment->save();
 
         return redirect('/apartments');
     }
