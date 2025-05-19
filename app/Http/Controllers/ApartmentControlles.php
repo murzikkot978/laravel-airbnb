@@ -16,6 +16,26 @@ use PhpParser\Builder;
 
 class ApartmentControlles extends Controller
 {
+    public function showHomePage()
+    {
+        $treeMostRentedCities = Apartment::select('city', \DB::raw('COUNT(reservations.id) as res_count'))
+            ->join('reservations', 'apartments.id', '=', 'reservations.apartment_id')
+            ->groupBy('city')
+            ->orderByDesc('res_count')
+            ->limit(3)
+            ->get();
+
+        $cities = $treeMostRentedCities->pluck('city');
+        $allApartments = [];
+        foreach ($cities as $city) {
+            $apartments = Apartment::with('photos')->withCount('reservations')->orderBy('reservations_count', 'desc')->where('city', $city)->limit(2)->get();
+
+            $allApartments[$city] = $apartments;
+        }
+
+        return view('homepage', ['allApartments' => $allApartments]);
+    }
+
     public function showNewProposition()
     {
         return view('newproposition');
@@ -50,8 +70,8 @@ class ApartmentControlles extends Controller
         ]);
 
 
-        $filterApartment = Apartment::with('photos') // Подгружаем связанные фото
-        ->when($request->where, fn($query) => $query->where('city', $request->where))
+        $filterApartment = Apartment::with('photos')
+            ->when($request->where, fn($query) => $query->where('city', $request->where))
             ->when($request->min, fn($query) => $query->where('price', '>=', $request->min))
             ->when($request->max, fn($query) => $query->where('price', '<=', $request->max))
             ->when($request->rooms, fn($query) => $query->where('rooms', $request->rooms))
@@ -125,10 +145,6 @@ class ApartmentControlles extends Controller
         $reservation->user()->associate(Auth::user());
         $reservation->apartment()->associate($id);
         $reservation->save();
-
-        $apartment = Apartment::where('id', $id)->first();
-        $apartment->reserved++;
-        $apartment->save();
 
         return redirect('/apartments');
     }

@@ -4,9 +4,7 @@ use App\Http\Controllers\AuthinticateController;
 use App\Http\Controllers\ApartmentControlles;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('homepage');
-});
+Route::get('/', [ApartmentControlles::class, 'showHomePage'])->name('homePage');
 
 Route::get('/registration', [AuthinticateController::class, 'showRegistrationForm'])->name('registration');
 Route::post('/registration', [AuthinticateController::class, 'registration']);
