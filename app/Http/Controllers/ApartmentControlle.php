@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PhpParser\Builder;
 
-class ApartmentControlles extends Controller
+class ApartmentControlle extends Controller
 {
     public function showHomePage()
     {
@@ -38,6 +38,9 @@ class ApartmentControlles extends Controller
 
     public function showNewProposition()
     {
+        if (!Auth::user()) {
+            return redirect('login');
+        }
         return view('newproposition');
     }
 
@@ -97,6 +100,11 @@ class ApartmentControlles extends Controller
     public function showEditApartment(int $id)
     {
         $apartment = Apartment::findOrFail($id);
+
+        if (!Auth::user() || Auth::user()->id != $apartment->user_id && !Auth::user()->role) {
+            abort(403);
+        }
+
         return view('editapartment', ['apartment' => $apartment]);
     }
 
@@ -127,6 +135,10 @@ class ApartmentControlles extends Controller
     {
         $apartment = Apartment::with('photos')->findOrFail($id);
 
+        if (!Auth::user() || Auth::user()->id != $apartment->user_id && !Auth::user()->role) {
+            abort(403);
+        }
+
         foreach ($apartment->photos as $photo) {
             Storage::disk('public')->delete('uploads/' . $photo->photo);
         }
@@ -139,6 +151,9 @@ class ApartmentControlles extends Controller
     public function reservation(StoreReservationRequest $request, int $id)
     {
 
+        if (!Auth::user()) {
+            return redirect('login');
+        }
 
         $reservation = new Reservation($request->validated());
 

@@ -19,7 +19,11 @@
         <div class="flex gap-5">
             <a href="http://localhost/">HOME</a>
             <a href="http://localhost/apartments">Apartments</a>
-
+            @auth()
+                @if(Auth::user()->role)
+                    <a href="http://localhost/allusers">All users</a>
+                @endif
+            @endauth
         </div>
 
         <div class="flex gap-5">

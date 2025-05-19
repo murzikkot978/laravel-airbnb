@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\AuthinticateController;
-use App\Http\Controllers\ApartmentControlles;
+use App\Http\Controllers\ApartmentControlle;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [ApartmentControlles::class, 'showHomePage'])->name('homePage');
+Route::get('/', [ApartmentControlle::class, 'showHomePage'])->name('homePage');
 
 Route::get('/registration', [AuthinticateController::class, 'showRegistrationForm'])->name('registration');
 Route::post('/registration', [AuthinticateController::class, 'registration']);
@@ -14,16 +15,19 @@ Route::post('/login', [AuthinticateController::class, 'login']);
 
 Route::get('/logout', [AuthinticateController::class, 'logout'])->name('logout');
 
-Route::get('/newproposition', [ApartmentControlles::class, 'showNewProposition'])->name('newproposition');
-Route::post('/newproposition', [ApartmentControlles::class, 'newProposition'])->name('newproposition');
+Route::get('/newproposition', [ApartmentControlle::class, 'showNewProposition'])->name('newproposition');
+Route::post('/newproposition', [ApartmentControlle::class, 'newProposition'])->name('newproposition');
 
-Route::get('/apartments', [ApartmentControlles::class, 'showApartments'])->name('apartments');
+Route::get('/apartments', [ApartmentControlle::class, 'showApartments'])->name('apartments');
 
-Route::get('/detailsapartments/{id}', [ApartmentControlles::class, 'showDetailsApartments'])->name('detailsapartments');
+Route::get('/allusers', [AllUsersController::class, 'showAllUsers'])->name('allusers');
+Route::get('/changeRole/{id}', [AllUsersController::class, 'changeRole'])->name('changeRole');
 
-Route::get('/editapartments/{id}', [ApartmentControlles::class, 'showEditApartment'])->name('editapartments');
-Route::post('/editapartments/{id}', [ApartmentControlles::class, 'editApartment'])->name('updateapartment');
+Route::get('/detailsapartments/{id}', [ApartmentControlle::class, 'showDetailsApartments'])->name('detailsapartments');
 
-Route::get('/deleteapartment/{id}', [ApartmentControlles::class, 'deleteApartment'])->name('deleteapartment');
+Route::get('/editapartments/{id}', [ApartmentControlle::class, 'showEditApartment'])->name('editapartments');
+Route::post('/editapartments/{id}', [ApartmentControlle::class, 'editApartment'])->name('updateapartment');
 
-Route::post('/newReservation/{id}', [ApartmentControlles::class, 'reservation'])->name('newReservation');
+Route::get('/deleteapartment/{id}', [ApartmentControlle::class, 'deleteApartment'])->name('deleteapartment');
+
+Route::post('/newReservation/{id}', [ApartmentControlle::class, 'reservation'])->name('newReservation');
