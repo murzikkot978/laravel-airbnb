@@ -27,3 +27,5 @@ Route::get('/editapartments/{id}', [ApartmentControlles::class, 'showEditApartme
 Route::post('/editapartments/{id}', [ApartmentControlles::class, 'editApartment'])->name('updateapartment');
 
 Route::get('/deleteapartment/{id}', [ApartmentControlles::class, 'deleteApartment'])->name('deleteapartment');
+
+Route::post('/newReservation/{id}', [ApartmentControlles::class, 'reservation'])->name('newReservation');
