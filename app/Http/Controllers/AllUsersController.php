@@ -20,7 +20,7 @@ class AllUsersController extends Controller
         if (!Auth::user()->role) {
             abort(403);
         }
-        $users = User::all();
+        $users = User::with('photoprofile')->get();
         return view('allusers', ['users' => $users]);
     }
 

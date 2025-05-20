@@ -16,7 +16,7 @@ class PhotoProfile extends Model
 
     protected $table = 'photoplofiles';
 
-    public function photos(): HasOne
+    public function photoprofile(): HasOne
     {
         return $this->hasOne(PhotoProfile::class);
     }
