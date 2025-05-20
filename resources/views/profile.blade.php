@@ -6,8 +6,13 @@
         <div class="grid md:grid-cols-2 gap-8 items-center justify-around">
 
             <div class="flex w-auto justify-center">
-                <img src="/storage/uploads/default.png" alt="Profile image"
-                     class="h-64 w-64 rounded-full border-4 border-gray-300 shadow-xl">
+                @if(isset($user->photoprofile))
+                    <img src="/storage/uploads/{{ $user->photoprofile->photoprofile }}" alt="Profile image"
+                         class="h-64 w-64 rounded-full border-4 border-gray-300 shadow-xl">
+                @else
+                    <img src="/storage/uploads/default.png" alt="Profile image"
+                         class="h-64 w-64 rounded-full border-4 border-gray-300 shadow-xl">
+                @endif
             </div>
 
             <div class="flex flex-col justify-center w-auto">
@@ -15,7 +20,7 @@
                 <p class="text-4xl font-semibold mt-2">Email: <span class="font-bold">{{ $user->email }}</span></p>
 
                 <div class="flex mt-6">
-                    <a href="{{ route('editprofile') }}"
+                    <a href="{{ route('editprofile', ['id' => $user->id]) }}"
                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l-full w-full shadow-lg duration-300 ease-in-out">
                         Edit Profile
                     </a>

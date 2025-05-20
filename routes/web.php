@@ -34,5 +34,7 @@ Route::post('/newReservation/{id}', [ApartmentControlle::class, 'reservation'])-
 
 Route::get('/profile', [AllUsersController::class, 'showProfile'])->name('profile');
 
-Route::get('/editprofile', [AllUsersController::class, 'showEditProfile'])->name('editprofile');
+Route::get('/editprofile/{id}', [AllUsersController::class, 'showEditProfile'])->name('editprofile');
+Route::post('/editprofile/{id}', [AllUsersController::class, 'editProfile'])->name('editprofile');
+
 Route::get('/deleteprofile/{id}', [AllUsersController::class, 'deleteProfile'])->name('deleteprofile');

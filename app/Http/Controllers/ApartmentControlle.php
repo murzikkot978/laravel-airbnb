@@ -10,15 +10,15 @@ use App\Models\Photo;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use PhpParser\Builder;
 
 class ApartmentControlle extends Controller
 {
     public function showHomePage()
     {
-        $treeMostRentedCities = Apartment::select('city', \DB::raw('COUNT(reservations.id) as res_count'))
+        $treeMostRentedCities = Apartment::select('city', DB::raw('COUNT(reservations.id) as res_count'))
             ->join('reservations', 'apartments.id', '=', 'reservations.apartment_id')
             ->groupBy('city')
             ->orderByDesc('res_count')
@@ -122,10 +122,10 @@ class ApartmentControlle extends Controller
             foreach ($request->file('photos') as $photo) {
                 $photoNameToStore = Str::uuid()->toString() . '_' . $photo->getClientOriginalName();
                 $photo->storeAs('uploads', $photoNameToStore, 'public');
-                Photo::factory([
+                Photo::create([
                     'photo' => $photoNameToStore,
                     'apartment_id' => $apartment->id,
-                ])->create();
+                ]);
             }
         }
         return redirect('detailsapartments/' . $id);
