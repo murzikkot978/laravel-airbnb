@@ -43,15 +43,18 @@ class AllUsersController extends Controller
         return view('profile', ['user' => $user]);
     }
 
-    public function deleteProfile($id)
+    public function deleteProfile(int $id)
     {
 
-        $apartment = Apartment::with('photos')->findOrFail($id);
+        $user = User::with(['apartments.photos', 'reservations.apartment'])->find($id);
 
-        foreach ($apartment->photos as $photo) {
-            Storage::disk('public')->delete('uploads/' . $photo->photo);
+        foreach ($user->apartments as $apartment) {
+            foreach ($apartment->photos as $photo) {
+                Storage::disk('public')->delete('uploads/' . $photo->photo);
+            }
+            Photo::where('apartment_id', $apartment->id)->delete();
+            Reservation::where('apartment_id', $apartment->id)->delete();
         }
-        Photo::where('apartment_id', $id)->delete();
         Reservation::where('user_id', $id)->delete();
         Apartment::where('user_id', $id)->delete();
         User::where('id', $id)->delete();
