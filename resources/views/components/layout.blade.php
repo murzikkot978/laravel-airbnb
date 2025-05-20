@@ -30,6 +30,8 @@
             @auth
                 <a href="http://localhost/newproposition">New apartment</a>
 
+                <a href="http://localhost/profile">Profile</a>
+
                 <form id="logout" action="{{ url('logout') }}" method="get">
                     @csrf
                     <button type="submit">Log out</button>

@@ -31,3 +31,8 @@ Route::post('/editapartments/{id}', [ApartmentControlle::class, 'editApartment']
 Route::get('/deleteapartment/{id}', [ApartmentControlle::class, 'deleteApartment'])->name('deleteapartment');
 
 Route::post('/newReservation/{id}', [ApartmentControlle::class, 'reservation'])->name('newReservation');
+
+Route::get('/profile', [AllUsersController::class, 'showProfile'])->name('profile');
+
+Route::get('/editprofile', [AllUsersController::class, 'showEditProfile'])->name('editprofile');
+Route::get('/deleteprofile/{id}', [AllUsersController::class, 'deleteProfile'])->name('deleteprofile');

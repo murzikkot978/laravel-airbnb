@@ -22,7 +22,7 @@
         })
     </script>
     @auth()
-        @if(Auth::user()->id == $apartment->user_id || Auth::user()->role = true)
+        @if(Auth::user()->id == $apartment->user_id || Auth::user()->role == 1)
             <div class="flex lg:flex-row justify-between w-full px-4 lg:px-80 gap-6">
                 <a href="{{ route('editapartments', ['id' => $apartment->id]) }}"
                    class="bg-red-500 p-4 hover:bg-red-700 rounded-xl w-full max-w-md mx-auto text-center">Edit
