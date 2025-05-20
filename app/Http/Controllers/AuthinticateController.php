@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,16 +21,9 @@ class AuthinticateController extends Controller
         return view('login');
     }
 
-    public function registration(Request $request)
+    public function registration(StoreUserRequest $request)
     {
-
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-        ]);
-
-        User::create($request->all());
+        User::create($request->validated());
 
         return redirect('login')->with('success', 'Registration Successful!');
     }

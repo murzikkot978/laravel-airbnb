@@ -10,15 +10,15 @@ use App\Models\Photo;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use PhpParser\Builder;
 
-class ApartmentControlles extends Controller
+class ApartmentControlle extends Controller
 {
     public function showHomePage()
     {
-        $treeMostRentedCities = Apartment::select('city', \DB::raw('COUNT(reservations.id) as res_count'))
+        $treeMostRentedCities = Apartment::select('city', DB::raw('COUNT(reservations.id) as res_count'))
             ->join('reservations', 'apartments.id', '=', 'reservations.apartment_id')
             ->groupBy('city')
             ->orderByDesc('res_count')
@@ -38,6 +38,9 @@ class ApartmentControlles extends Controller
 
     public function showNewProposition()
     {
+        if (!Auth::user()) {
+            return redirect('login');
+        }
         return view('newproposition');
     }
 
@@ -97,6 +100,11 @@ class ApartmentControlles extends Controller
     public function showEditApartment(int $id)
     {
         $apartment = Apartment::findOrFail($id);
+
+        if (!Auth::user() || Auth::user()->id != $apartment->user_id && !Auth::user()->role) {
+            abort(403);
+        }
+
         return view('editapartment', ['apartment' => $apartment]);
     }
 
@@ -114,10 +122,10 @@ class ApartmentControlles extends Controller
             foreach ($request->file('photos') as $photo) {
                 $photoNameToStore = Str::uuid()->toString() . '_' . $photo->getClientOriginalName();
                 $photo->storeAs('uploads', $photoNameToStore, 'public');
-                Photo::factory([
+                Photo::create([
                     'photo' => $photoNameToStore,
                     'apartment_id' => $apartment->id,
-                ])->create();
+                ]);
             }
         }
         return redirect('detailsapartments/' . $id);
@@ -126,6 +134,10 @@ class ApartmentControlles extends Controller
     public function deleteApartment(int $id)
     {
         $apartment = Apartment::with('photos')->findOrFail($id);
+
+        if (!Auth::user() || Auth::user()->id != $apartment->user_id && !Auth::user()->role) {
+            abort(403);
+        }
 
         foreach ($apartment->photos as $photo) {
             Storage::disk('public')->delete('uploads/' . $photo->photo);
@@ -139,6 +151,9 @@ class ApartmentControlles extends Controller
     public function reservation(StoreReservationRequest $request, int $id)
     {
 
+        if (!Auth::user()) {
+            return redirect('login');
+        }
 
         $reservation = new Reservation($request->validated());
 
