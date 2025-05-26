@@ -11,11 +11,14 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ApartmentControlle extends Controller
 {
+
+    //3 most populer city
     public function showHomePage()
     {
         $treeMostRentedCities = Apartment::select('city', DB::raw('COUNT(reservations.id) as res_count'))
@@ -101,9 +104,7 @@ class ApartmentControlle extends Controller
     {
         $apartment = Apartment::findOrFail($id);
 
-        if (!Auth::user() || Auth::user()->id != $apartment->user_id && !Auth::user()->role) {
-            abort(403);
-        }
+        Gate::authorize('user_is_owner', $apartment);
 
         return view('editapartment', ['apartment' => $apartment]);
     }
@@ -135,9 +136,7 @@ class ApartmentControlle extends Controller
     {
         $apartment = Apartment::with('photos')->findOrFail($id);
 
-        if (!Auth::user() || Auth::user()->id != $apartment->user_id && !Auth::user()->role) {
-            abort(403);
-        }
+        Gate::authorize('user_is_owner', $apartment);
 
         foreach ($apartment->photos as $photo) {
             Storage::disk('public')->delete('uploads/' . $photo->photo);

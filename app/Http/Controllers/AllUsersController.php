@@ -8,22 +8,24 @@ use App\Models\Photo;
 use App\Models\PhotoProfile;
 use App\Models\Reservation;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AllUsersController extends Controller
 {
+
+    //admin panel with all users
     public function showAllUsers()
     {
-        if (!Auth::user()->role) {
-            abort(403);
-        }
+        Gate::authorize('user_is_admin');
+
         $users = User::with('photoprofile')->get();
         return view('allusers', ['users' => $users]);
     }
 
+    //admin can change loles for all users
     public function changeRole($id)
     {
         if (Auth::user()->id == $id) {
@@ -48,6 +50,7 @@ class AllUsersController extends Controller
 
     public function deleteProfile(int $id)
     {
+        Gate::authorize('user_is_owner_profile', $id);
 
         $user = User::with(['apartments.photos', 'reservations.apartment'])->find($id);
 
@@ -67,12 +70,16 @@ class AllUsersController extends Controller
 
     public function showEditProfile(int $id)
     {
+        Gate::authorize('user_is_owner_profile', $id);
+
         $user = User::with('photoprofile')->find($id);
         return view('editprofile', ['user' => $user]);
     }
 
     public function editProfile(UpdateUserRequest $request, int $id)
     {
+        Gate::authorize('user_is_owner_profile', $id);
+
         $user = User::with('photoprofile')->find($id);
         if (isset($request->password)) {
             $user->update($request->validated());
