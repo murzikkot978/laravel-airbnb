@@ -1,61 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Airbnb Clone
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a site where users can browse, book, and manage apartments.
 
-## About Laravel
+In the user profile, we can see details about the user and the apartments reserved by them.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The admin can manage all apartments and users. They can change user roles and update user information.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+* **User Authentication:**  
+  Users can register and log in to their accounts.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Apartment Listings:**  
+  Explore a wide range of apartment listings from various hosts.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+* **Booking System:**  
+  Book your desired apartment and view your upcoming and past bookings.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* **Top Destinations:**  
+  Discover the most popular places to stay, based on user interest.
 
-## Laravel Sponsors
+## User Dashboard
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### After logging in, users can:
 
-### Premium Partners
+* View and manage their bookings.
+* See their own listings and propositions.
+* Explore popular travel destinations and descriptions.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+## How to Start
 
-## Contributing
+### Preparation:
+You need the following tools installed on your system:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* PHP  
+  Verify installation:
+  ```bash
+  php -v
+  ```
 
-## Code of Conduct
+* Composer   
+  Verify installation:
+  ```bash
+  composer -V
+  ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* Docker   
+  Verify installation:
+  ```bash
+  docker -V
+  ```
 
-## Security Vulnerabilities
+#### If any tools are missing:
+* [PHP](https://www.php.net/downloads)
+* [Composer](https://getcomposer.org/download/)
+* [Docker](https://www.docker.com/products/docker-desktop)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Installation Steps:
 
-## License
+1. **Install Laravel Installer (if not already installed):**
+   ```bash
+   composer global require laravel/installer
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2. **Restart your terminal and verify the Laravel installation:**
+   ```bash
+   laravel --help
+   ```
+
+   If there are any errors, refer to the official Laravel documentation:  
+   [Laravel Installation Guide](https://laravel.com/docs/12.x/installation)
+
+3. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/murzikkot978/laravel-airbnb.git
+   ```
+
+4. **Navigate into the project directory:**
+   ```bash
+   cd laravel-airbnb
+   ```
+
+5. **Install Laravel Sail:**
+   ```bash
+   php artisan sail:install
+   ```
+
+6. **Start the Laravel application using Sail:**
+   ```bash
+   ./vendor/bin/sail up
+   ```
+
+7. **Install JavaScript dependencies:**
+   ```bash
+   npm install
+   npm run dev
+   ```
+
+8. **Run database migrations:**
+   ```bash
+   ./vendor/bin/sail artisan migrate
+   ```
+
+9. **Access the application in your browser:**  
+   Your server will be available at:  
+   [http://localhost](http://localhost)
+
+---
+
+### Notes:
+* Ensure your Docker service is up and running before starting Laravel Sail.
+* The `npm run dev` command compiles front-end assets using tools like Vite/Tailwind CSS (required for full functionality).
+* Check if your `.env` file is properly configured for database and other environment-specific settings.
