@@ -25,10 +25,10 @@ class AllUsersController extends Controller
         return view('allusers', ['users' => $users]);
     }
 
-    //admin can change loles for all users
-    public function changeRole($id)
+    //admin can change roles for all users
+    public function changeRole(int $id)
     {
-        if (Auth::user()->id == $id) {
+        if (Auth::user()->id === $id) {
             return redirect('allusers');
         }
         $user = User::where('id', $id)->first();

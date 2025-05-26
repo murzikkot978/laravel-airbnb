@@ -104,7 +104,7 @@ class ApartmentControlle extends Controller
     {
         $apartment = Apartment::findOrFail($id);
 
-        Gate::authorize('user_is_owner', $apartment);
+        Gate::authorize('user_is_owner_apartment', $apartment);
 
         return view('editapartment', ['apartment' => $apartment]);
     }
@@ -136,7 +136,7 @@ class ApartmentControlle extends Controller
     {
         $apartment = Apartment::with('photos')->findOrFail($id);
 
-        Gate::authorize('user_is_owner', $apartment);
+        Gate::authorize('user_is_owner_apartment', $apartment);
 
         foreach ($apartment->photos as $photo) {
             Storage::disk('public')->delete('uploads/' . $photo->photo);
