@@ -21,7 +21,7 @@ class AllUsersController extends Controller
     {
         Gate::authorize('user_is_admin');
 
-        $users = User::with('photoprofile')->get();
+        $users = User::all();
         return view('allusers', ['users' => $users]);
     }
 
@@ -63,6 +63,9 @@ class AllUsersController extends Controller
         }
         Reservation::where('user_id', $id)->delete();
         Apartment::where('user_id', $id)->delete();
+        if ($user->photoprofile !== 'default.png') {
+            Storage::disk('public')->delete('uploads/' . $user->photoprofile);
+        }
         User::where('id', $id)->delete();
 
         return view('login');
@@ -72,7 +75,7 @@ class AllUsersController extends Controller
     {
         Gate::authorize('user_is_owner_profile', $id);
 
-        $user = User::with('photoprofile')->find($id);
+        $user = User::find($id);
         return view('editprofile', ['user' => $user]);
     }
 
@@ -80,26 +83,21 @@ class AllUsersController extends Controller
     {
         Gate::authorize('user_is_owner_profile', $id);
 
-        $user = User::with('photoprofile')->find($id);
+        $user = User::find($id);
         if (isset($request->password)) {
-            $user->update($request->validated());
+            $user->update($request->validated()->except('photoprofile'));
         } else {
-            $user->update($request->except('password'));
+            $user->update($request->except(['password', 'photoprofile']));
         }
 
         if ($request->hasFile('photoprofile')) {
-            if (isset($user->photoprofile)) {
-                Storage::disk('public')->delete('uploads/' . $user->photoprofile->photoprofile);
+            if ($user->photoprofile !== 'default.png') {
+                Storage::disk('public')->delete('uploads/' . $user->photoprofile);
             }
-            PhotoProfile::where('user_id', $id)->delete();
-
 
             $photoNameToStore = Str::uuid()->toString() . '_' . $request->file('photoprofile')->getClientOriginalName();
             $request->file('photoprofile')->storeAs('uploads', $photoNameToStore, 'public');
-            PhotoProfile::create([
-                'photoprofile' => $photoNameToStore,
-                'user_id' => $id,
-            ]);
+            User::where('id', $id)->update(['photoprofile' => $photoNameToStore]);
         }
 
         return redirect('profile');

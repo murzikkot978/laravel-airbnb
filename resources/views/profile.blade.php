@@ -6,13 +6,8 @@
         <div class="grid md:grid-cols-2 gap-8 items-center justify-around">
 
             <div class="flex w-auto justify-center">
-                @if(isset($user->photoprofile))
-                    <img src="/storage/uploads/{{ $user->photoprofile->photoprofile }}" alt="Profile image"
-                         class="h-64 w-64 rounded-full border-4 border-gray-300 shadow-xl">
-                @else
-                    <img src="/storage/uploads/default.png" alt="Profile image"
-                         class="h-64 w-64 rounded-full border-4 border-gray-300 shadow-xl">
-                @endif
+                <img src="/storage/uploads/{{ $user->photoprofile }}" alt="Profile image"
+                     class="h-64 w-64 rounded-full border-4 border-gray-300 shadow-xl">
             </div>
 
             <div class="flex flex-col justify-center w-auto">

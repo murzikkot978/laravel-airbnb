@@ -5,13 +5,8 @@
             <h1 class="text-2xl font-bold text-gray-700 text-center mb-6">User Management</h1>
             @foreach($users as $user)
                 <div class="flex justify-between items-center  mb-4 gap-5">
-                    @if (!isset($user->photoprofile))
-                        <img src="/storage/uploads/default.png"
+                        <img src="/storage/uploads/{{ $user->photoprofile }}"
                              class="h-12 w-12 rounded-full border-2 border-gray-300 shadow-xl">
-                    @else
-                        <img src="/storage/uploads/{{ $user->photoprofile->photoprofile }}"
-                             class="h-12 w-12 rounded-full border-2 border-gray-300 shadow-xl">
-                    @endif
 
                     <div class="flex flex-col">
                         <h2>{{ $user->name }}</h2>
