@@ -5,8 +5,8 @@
             <h1 class="text-2xl font-bold text-gray-700 text-center mb-6">User Management</h1>
             @foreach($users as $user)
                 <div class="flex justify-between items-center  mb-4 gap-5">
-                        <img src="/storage/uploads/{{ $user->photoprofile }}"
-                             class="h-12 w-12 rounded-full border-2 border-gray-300 shadow-xl">
+                    <img src="/storage/uploads/{{ $user->photoprofile }}"
+                         class="h-12 w-12 rounded-full border-2 border-gray-300 shadow-xl">
 
                     <div class="flex flex-col">
                         <h2>{{ $user->name }}</h2>
@@ -20,13 +20,17 @@
                         <h2 class="bg-red-400 rounded-full p-2 w-16 text-center">user</h2>
                     @endif
 
-                    <a href="{{ route('changeRole', ['id' => $user->id]) }}"
-                       class="bg-gray-200 p-2 rounded-full hover:bg-gray-400">Change role</a>
+                    <form action="{{ route('users.changeRole', ['user' => $user]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="bg-gray-200 p-2 rounded-full hover:bg-gray-400">
+                            Change role
+                        </button>
+                    </form>
 
-                        <a href="{{ route('editprofile', ['id' => $user->id]) }}"
-                           class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2  rounded-full shadow-lg">
-                            Edit Profile
-                        </a>
+                    <a href="{{ route('users.edit', ['user' => $user]) }}"
+                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2  rounded-full shadow-lg">
+                        Edit Profile
+                    </a>
                 </div>
             @endforeach
         </div>

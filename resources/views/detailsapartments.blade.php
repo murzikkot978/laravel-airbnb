@@ -24,10 +24,10 @@
     @auth()
         @if(Auth::user()->id == $apartment->user_id || Auth::user()->role == 1)
             <div class="flex lg:flex-row justify-between w-full px-4 lg:px-80 gap-6">
-                <a href="{{ route('editapartments', ['id' => $apartment->id]) }}"
+                <a href="{{ route('apartments.edit', ['apartment' => $apartment]) }}"
                    class="bg-red-500 p-4 hover:bg-red-700 rounded-xl w-full max-w-md mx-auto text-center">Edit
                     apartment</a>
-                <a href="{{ route('deleteapartment', ['id' => $apartment->id]) }}"
+                <a href="{{ route('apartments.destroy', ['apartment' => $apartment->id]) }}"
                    class="bg-red-500 p-4 hover:bg-red-700 rounded-xl w-full max-w-md mx-auto text-center">Delete</a>
             </div>
         @endif
@@ -96,7 +96,7 @@
 
             </div>
 
-            <form method="post" action="{{route('newReservation', ['id' => $apartment->id])}}">
+            <form method="post" action="{{route('apartments.reservation', ['apartment' => $apartment])}}">
                 @csrf
                 <div class="flex gap-4">
                     <div class="flex flex-col flex-1">

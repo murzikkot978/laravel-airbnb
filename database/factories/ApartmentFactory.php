@@ -18,14 +18,14 @@ class ApartmentFactory extends Factory
     public function definition(): array
     {
         return [
-                'title' => fake()->sentence(),
-                'content' => fake()->paragraphs(5, true),
-                'rooms' => fake()->randomDigit(),
-                'peoples' => fake()->randomDigit(),
-                'price' => fake()->randomDigit(),
-                'country' => fake()->country(),
-                'city' => fake()->city(),
-                'street' => fake()->streetAddress(),
+            'title' => fake()->sentence(),
+            'content' => fake()->paragraphs(5, true),
+            'rooms' => fake()->randomDigit(),
+            'peoples' => fake()->randomDigit(),
+            'price' => fake()->randomDigit(),
+            'country' => fake()->country(),
+            'city' => fake()->city(),
+            'street' => fake()->streetAddress(),
         ];
     }
 }
