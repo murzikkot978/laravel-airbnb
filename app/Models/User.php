@@ -51,10 +51,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Apartment::class);
     }
+
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
     }
+
     public function photoprofile(): HasOne
     {
         return $this->hasOne(PhotoProfile::class);

@@ -4,7 +4,8 @@
         <form method="post" action="/login" class="flex flex-col gap-4">
             @csrf
             <input type="email" name="email" id="email" placeholder="Email" class="border-2 rounded p-2" required>
-            <input type="password" name="password" id="password" placeholder="Password" class="border-2 rounded p-2" required>
+            <input type="password" name="password" id="password" placeholder="Password" class="border-2 rounded p-2"
+                   required>
             <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Log in</button>
         </form>
         <p class="text-center text-sm text-gray-600 mt-4">

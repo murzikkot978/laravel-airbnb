@@ -5,7 +5,7 @@
             <p class="w-full text-center font-bold text-2xl mb-4">{{ $apartments[0]->city }}</p>
             <div class="grid md:grid-cols-2 gap-6 mb-5">
                 @foreach($apartments as $apartment)
-                    <a href="{{ route('detailsapartments', ['id' => $apartment->id]) }}">
+                    <a href="{{ route('apartments.show', ['apartment' => $apartment]) }}">
                         <div
                             class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
                             @csrf

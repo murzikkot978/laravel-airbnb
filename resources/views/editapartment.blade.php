@@ -1,6 +1,6 @@
 <x-layout>
     <div class="m-auto">
-        <form method="post" action="{{ route('updateapartment', ['id' => $apartment->id]) }}"
+        <form method="post" action="{{ route('apartments.update', ['apartment' => $apartment->id]) }}"
               class="grid grid-cols-1 md:grid-cols-2 gap-6" enctype="multipart/form-data">
             @csrf
             <div class="bg-gray-300 p-8 rounded-lg shadow-lg w-full">

@@ -1,6 +1,6 @@
 <x-layout>
     <div class="m-auto">
-        <form method="post" action="{{ route('newproposition') }}" enctype="multipart/form-data"
+        <form method="post" action="{{ route('apartments.store') }}" enctype="multipart/form-data"
               class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @csrf
             <div class="bg-gray-300 p-8 rounded-lg shadow-lg w-full">

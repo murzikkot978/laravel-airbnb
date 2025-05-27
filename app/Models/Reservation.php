@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Reservation extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-      'user_id',
-      'apartment_id',
-      'start_date',
-      'end_date',
+        'user_id',
+        'apartment_id',
+        'start_date',
+        'end_date',
     ];
 
     protected $table = 'reservations';

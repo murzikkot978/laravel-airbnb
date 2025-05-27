@@ -17,20 +17,20 @@
 
 
         <div class="flex gap-5">
-            <a href="http://localhost/">HOME</a>
-            <a href="http://localhost/apartments">Apartments</a>
+            <a href="{{ route('apartments.apartment') }}">HOME</a>
+            <a href="{{ route('apartments.index') }}">Apartments</a>
             @auth()
                 @if(Auth::user()->role)
-                    <a href="http://localhost/allusers">All users</a>
+                    <a href="{{ route('users.index') }}">All users</a>
                 @endif
             @endauth
         </div>
 
         <div class="flex gap-5">
             @auth
-                <a href="http://localhost/newproposition">New apartment</a>
+                <a href="{{ route('apartments.create') }}">New apartment</a>
 
-                <a href="http://localhost/profile">Profile</a>
+                <a href="{{ route('users.show', ['user' => Auth::id()]) }}">Profile</a>
 
                 <form id="logout" action="{{ url('logout') }}" method="get">
                     @csrf

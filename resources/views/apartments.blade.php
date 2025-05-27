@@ -1,6 +1,6 @@
 <x-layout>
 
-    <form method="get" action="{{ route('apartments') }}"
+    <form method="get" action="{{ route('apartments.apartment') }}"
           class="w-screen bg-blue-500 mt-14 py-4 text-white flex justify-center">
         <div class="flex gap-6 border-2 border-white rounded-2xl px-6 py-4 bg-white text-black shadow-md">
             <div class="flex flex-col items-start">
@@ -37,7 +37,7 @@
     <div class=" grid md:grid-cols-5 mt-8 gap-6 px-10 py-10">
 
         @foreach($apartments as $apartment)
-            <a href="{{ route('detailsapartments', ['id' => $apartment->id]) }}">
+            <a href="{{ route('apartments.show', ['apartment' => $apartment]) }}">
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-110">
                     @csrf
                     <img src="/storage/uploads/{{ $apartment->photos[0]->photo }}"

@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\AllUsersController;
 use App\Http\Controllers\AuthinticateController;
-use App\Http\Controllers\ApartmentControlle;
+use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [ApartmentControlle::class, 'showHomePage'])->name('homePage');
 
 Route::get('/registration', [AuthinticateController::class, 'showRegistrationForm'])->name('registration');
 Route::post('/registration', [AuthinticateController::class, 'registration']);
@@ -15,26 +14,16 @@ Route::post('/login', [AuthinticateController::class, 'login']);
 
 Route::get('/logout', [AuthinticateController::class, 'logout'])->name('logout');
 
-Route::get('/newproposition', [ApartmentControlle::class, 'showNewProposition'])->name('newproposition');
-Route::post('/newproposition', [ApartmentControlle::class, 'newProposition'])->name('newproposition');
+Route::resource('apartments', ApartmentController::class);
 
-Route::get('/apartments', [ApartmentControlle::class, 'showApartments'])->name('apartments');
+Route::get('/', [ApartmentController::class, 'apartment'])->name('apartments.apartment');
+Route::post('/apartments/{apartment}/reservation', [ApartmentController::class, 'reservation'])->name('apartments.reservation');
+Route::post('/apartments/{apartment}/update', [ApartmentController::class, 'update'])->name('apartments.update');
+Route::get('/apartments/{apartment}/delete', [ApartmentController::class, 'destroy'])->name('apartments.destroy');
 
-Route::get('/allusers', [AllUsersController::class, 'showAllUsers'])->name('allusers');
-Route::get('/changeRole/{id}', [AllUsersController::class, 'changeRole'])->name('changeRole');
 
-Route::get('/detailsapartments/{id}', [ApartmentControlle::class, 'showDetailsApartments'])->name('detailsapartments');
+Route::resource('users', UsersController::class);
 
-Route::get('/editapartments/{id}', [ApartmentControlle::class, 'showEditApartment'])->name('editapartments');
-Route::post('/editapartments/{id}', [ApartmentControlle::class, 'editApartment'])->name('updateapartment');
-
-Route::get('/deleteapartment/{id}', [ApartmentControlle::class, 'deleteApartment'])->name('deleteapartment');
-
-Route::post('/newReservation/{id}', [ApartmentControlle::class, 'reservation'])->name('newReservation');
-
-Route::get('/profile', [AllUsersController::class, 'showProfile'])->name('profile');
-
-Route::get('/editprofile/{id}', [AllUsersController::class, 'showEditProfile'])->name('editprofile');
-Route::post('/editprofile/{id}', [AllUsersController::class, 'editProfile'])->name('editprofile');
-
-Route::get('/deleteprofile/{id}', [AllUsersController::class, 'deleteProfile'])->name('deleteprofile');
+Route::post('/users/{user}/changeRole', [UsersController::class, 'changeRole'])->name('users.changeRole');
+Route::post('/users/{user}/update', [UsersController::class, 'update'])->name('users.update');
+Route::get('/users/{user}/delete', [UsersController::class, 'destroy'])->name('users.destroy');
